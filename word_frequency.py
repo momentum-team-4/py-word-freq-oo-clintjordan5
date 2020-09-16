@@ -7,19 +7,23 @@ STOP_WORDS = [
 
 class FileReader:
     def __init__(self, filename):
-        pass
+        self.filename = filename.open()
+        # pass
 
     def read_contents(self):
         """
         This should read all the contents of the file
         and return them as one string.
         """
-        raise NotImplementedError("FileReader.read_contents")
+        file_content = self.filename.read()
+        return file_content
+        # raise NotImplementedError("FileReader.read_contents")
 
 
 class WordList:
     def __init__(self, text):
-        pass
+        self.text = text
+        # pass
 
     def extract_words(self):
         """
@@ -27,14 +31,23 @@ class WordList:
         is responsible for lowercasing all words and stripping
         them of punctuation.
         """
-        raise NotImplementedError("WordList.extract_words")
+        
+        strip_punctuation = self.text.lower().replace('.','').replace(',','').replace('!','').replace('?','').replace('—','').replace(':','').split()
+        self.strip_punctuation = strip_punctuation
+        # raise NotImplementedError("WordList.extract_words")
 
     def remove_stop_words(self):
         """
         Removes all stop words from our word list. Expected to
         be run after extract_words.
         """
-        raise NotImplementedError("WordList.remove_stop_words")
+        word_list_remove = []
+        for word in self.strip_punctuation:
+            if not word in STOP_WORDS:
+                word_list_remove.append(word)
+            self.word_list_remove = word_list_remove
+
+        # raise NotImplementedError("WordList.remove_stop_words")
 
     def get_freqs(self):
         """
@@ -43,12 +56,19 @@ class WordList:
         extract_words and remove_stop_words. The data structure
         could be a dictionary or another type of object.
         """
-        raise NotImplementedError("WordList.get_freqs")
+        frequency = {}
+        for word in self.word_list_remove:
+            if word not in frequency.keys():
+                frequency[word] = 1
+            else:
+                frequency[word] += 1
+        # raise NotImplementedError("WordList.get_freqs")
 
 
 class FreqPrinter:
     def __init__(self, freqs):
-        pass
+        self.freqs = freqs
+        # pass
 
     def print_freqs(self):
         """
@@ -67,7 +87,13 @@ class FreqPrinter:
        rights | 6    ******
         right | 6    ******
         """
-        raise NotImplementedError("FreqPrinter.print_freqs")
+
+        y = {}
+        self.freqs = sorted(y, key = y.get, reverse=True)
+        for num in self.freqs:
+            print(num, y[num, '*' * y[num]])
+        # raise NotImplementedError("FreqPrinter.print_freqs")
+        # code returns no errors, but not seeing anything print in terminal.
 
 
 if __name__ == "__main__":
